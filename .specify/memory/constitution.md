@@ -1,12 +1,3 @@
-<!-- SYNC IMPACT REPORT — temporary, remove before commit
-  Version change: 1.3.0 → 1.4.0
-  Modified principles: none renamed
-  Added principles: VII. Cost-Consciousness (Free/Cheap by Default)
-  Added sections: none
-  Removed sections: none
-  Deferred TODOs: none
--->
-
 # Org-SK Constitution
 
 ## Core Principles
