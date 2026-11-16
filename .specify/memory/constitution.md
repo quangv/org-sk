@@ -1,50 +1,56 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT — temporary, remove before commit
+  Version change: 1.2.0 → 1.3.0
+  Modified principles: III. Text-File Based Storage — expanded rationale (prior amendment, retained)
+  Added principles: VI. Leverage Common Formats (no re-inventing the wheel; prefer JSON/YAML/Markdown)
+  Added sections: none
+  Removed sections: none
+  Deferred TODOs: none
+-->
+
+# Org-SK Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Simplicity
+Org-SK is simple by design. Every feature, file, and interaction must be explainable in one sentence. Complexity is permitted only when simplicity is genuinely impossible, and then it must be documented alongside the change. YAGNI: do not build what is not needed today.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Markdown-Native Format
+All content is written in Markdown. Notes, tasks, and specifications are plain text files structured with headings, lists, and code blocks. No proprietary formats, no binary databases. Files must be human-readable without any tool.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Text-File Based Storage
+Org-SK stores everything as text files on disk. The file system is the database; the directory layout is the schema. Files are the unit of ownership, versioning, and portability. Tools read and write text; they never serialize state into opaque blobs. Notes are text-based because they must stand the test of time: plain text survives format churn, tool abandonment, and platform lock-in that proprietary formats do not. A note written today should be readable by any future tool, or by a human with nothing but a text editor.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. User Ownership of Data
+The user owns their notes, tasks, and information — completely and exclusively. No data leaves the user's machine without explicit consent. Org-SK is a tool, not a platform: it does not claim, sync, or monetize user content. Privacy is a non-negotiable default, not an opt-in feature.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Deliberate Growth
+Small changes to the spec can have huge consequences, so think small — like Basecamp and 37signals. Every change to the spec must be deliberate and thought out before it is made. Org-SK grows at turtle status: features are added slowly, one at a time, and only when there is a real need. A feature that is not clearly justified does not get built. Speed is never an argument for scope.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### VI. Leverage Common Formats
+Org-SK follows common best practices and does not re-invent the wheel. Where a format is already standard — JSON, YAML, Markdown, and the like — Org-SK uses it instead of inventing its own. If users are already doing something, or something is already popular, Org-SK tries to leverage it rather than design around it. A custom format is justified only when no common one fits; then the reason is written down.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Data & File Conventions
+- Files use UTF-8 encoding with LF line endings.
+- Every note and task lives in a plain `.md` file.
+- Metadata, when needed, lives inline as YAML front matter — never in a separate database.
+- Directory structure is flat or lightly nested; deep hierarchies are a code smell.
+- Backups are the user's responsibility; Org-SK never deletes or overwrites without a visible diff.
+- Use standard formats wherever one exists; invent a custom format only when no common one fits, and record why.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+- Changes are proposed as Markdown specs first, then implemented.
+- Every change to behavior is accompanied by a note describing why.
+- Tests, when they exist, are text files too — readable, diffable, and versioned with the code.
+- Review is a human act: a second person reads the diff and the note before anything is merged.
+- No automated deployment; the user decides when and how to ship.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution is the highest authority for Org-SK. It supersedes all other practices, docs, and conventions. Any conflict between documents is resolved in favor of this constitution.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Amendments: A proposal is written as a Markdown spec describing the change and its rationale. It is reviewed by a second person, and ratified by the user. Amendments take effect on ratification and are recorded with a version bump.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Versioning: Semantic versioning (MAJOR.MINOR.PATCH). MAJOR for removals or reversals of principles; MINOR for new principles or materially expanded guidance; PATCH for clarifications and wording fixes.
+
+Compliance: Every PR and review must verify alignment with this constitution. Complexity that deviates from a principle must be justified in writing alongside the change.
+
+**Version**: 1.3.0 | **Ratified**: 2026-11-15 | **Last Amended**: 2026-11-15
