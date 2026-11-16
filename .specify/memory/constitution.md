@@ -1,3 +1,12 @@
+<!-- Sync Impact Report
+Version: 1.5.0 -> 1.6.0 (MINOR bump: materially expanded guidance)
+Modified principles:
+  - VIII. Accessibility First: scope broadened from webapp/app to everything Org-SK makes
+Added sections: none
+Removed sections: none
+Deferred items: none
+-->
+
 # Org-SK Constitution
 
 ## Core Principles
@@ -23,6 +32,9 @@ Org-SK follows common best practices and does not re-invent the wheel. Where a f
 ### VII. Cost-Consciousness (Free/Cheap by Default)
 Org-SK is built and operated by a solo founder with limited resources. Every decision involving hosting, service providers, licenses, infrastructure, or third-party dependencies must be evaluated for cost first. Free and cheap alternatives are preferred; a paid service is justified only when no free alternative meets the need, and the justification is written down alongside the change. The default is self-hosted, open-source, and free software. Recurring subscriptions and vendor lock-in are avoided wherever a one-time or self-hosted option exists. Cost is a first-class constraint, not an afterthought.
 
+### VIII. Accessibility First
+Everything Org-SK makes is accessible to screen-readers and other assistive technologies by default — not just the webapp, but every interface, document, note, spec, and interaction. All deliverables must be operable, understandable, and robust for users of all abilities. Semantic structure is non-negotiable: headings form a logical outline, lists are real lists, and interactive elements are labeled and reachable via keyboard. Text alternatives are provided for all non-text content. Accessibility is not an afterthought or an optional layer — it is a design constraint applied from the start, evaluated in every review, and never traded against convenience or speed.
+
 ## Data & File Conventions
 - Files use UTF-8 encoding with LF line endings.
 - Every note and task lives in a plain `.md` file.
@@ -38,6 +50,7 @@ Org-SK is built and operated by a solo founder with limited resources. Every dec
 - Review is a human act: a second person reads the diff and the note before anything is merged.
 - No automated deployment; the user decides when and how to ship.
 - Cost review: before adopting any paid service, hosting plan, or license, write down the free or cheap alternative considered and why it was rejected.
+- Accessibility review: every interface change is checked for screen-reader compatibility — semantic structure, keyboard reachability, and text alternatives — before it is considered complete.
 
 ## Governance
 This constitution is the highest authority for Org-SK. It supersedes all other practices, docs, and conventions. Any conflict between documents is resolved in favor of this constitution.
@@ -48,4 +61,4 @@ Versioning: Semantic versioning (MAJOR.MINOR.PATCH). MAJOR for removals or rever
 
 Compliance: Every PR and review must verify alignment with this constitution. Complexity that deviates from a principle must be justified in writing alongside the change.
 
-**Version**: 1.4.0 | **Ratified**: 2026-11-15 | **Last Amended**: 2026-11-15
+**Version**: 1.6.0 | **Ratified**: 2026-11-15 | **Last Amended**: 2026-11-15
