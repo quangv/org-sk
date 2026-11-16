@@ -1,7 +1,7 @@
 <!-- SYNC IMPACT REPORT — temporary, remove before commit
-  Version change: 1.2.0 → 1.3.0
-  Modified principles: III. Text-File Based Storage — expanded rationale (prior amendment, retained)
-  Added principles: VI. Leverage Common Formats (no re-inventing the wheel; prefer JSON/YAML/Markdown)
+  Version change: 1.3.0 → 1.4.0
+  Modified principles: none renamed
+  Added principles: VII. Cost-Consciousness (Free/Cheap by Default)
   Added sections: none
   Removed sections: none
   Deferred TODOs: none
@@ -29,6 +29,9 @@ Small changes to the spec can have huge consequences, so think small — like Ba
 ### VI. Leverage Common Formats
 Org-SK follows common best practices and does not re-invent the wheel. Where a format is already standard — JSON, YAML, Markdown, and the like — Org-SK uses it instead of inventing its own. If users are already doing something, or something is already popular, Org-SK tries to leverage it rather than design around it. A custom format is justified only when no common one fits; then the reason is written down.
 
+### VII. Cost-Consciousness (Free/Cheap by Default)
+Org-SK is built and operated by a solo founder with limited resources. Every decision involving hosting, service providers, licenses, infrastructure, or third-party dependencies must be evaluated for cost first. Free and cheap alternatives are preferred; a paid service is justified only when no free alternative meets the need, and the justification is written down alongside the change. The default is self-hosted, open-source, and free software. Recurring subscriptions and vendor lock-in are avoided wherever a one-time or self-hosted option exists. Cost is a first-class constraint, not an afterthought.
+
 ## Data & File Conventions
 - Files use UTF-8 encoding with LF line endings.
 - Every note and task lives in a plain `.md` file.
@@ -43,6 +46,7 @@ Org-SK follows common best practices and does not re-invent the wheel. Where a f
 - Tests, when they exist, are text files too — readable, diffable, and versioned with the code.
 - Review is a human act: a second person reads the diff and the note before anything is merged.
 - No automated deployment; the user decides when and how to ship.
+- Cost review: before adopting any paid service, hosting plan, or license, write down the free or cheap alternative considered and why it was rejected.
 
 ## Governance
 This constitution is the highest authority for Org-SK. It supersedes all other practices, docs, and conventions. Any conflict between documents is resolved in favor of this constitution.
@@ -53,4 +57,4 @@ Versioning: Semantic versioning (MAJOR.MINOR.PATCH). MAJOR for removals or rever
 
 Compliance: Every PR and review must verify alignment with this constitution. Complexity that deviates from a principle must be justified in writing alongside the change.
 
-**Version**: 1.3.0 | **Ratified**: 2026-11-15 | **Last Amended**: 2026-11-15
+**Version**: 1.4.0 | **Ratified**: 2026-11-15 | **Last Amended**: 2026-11-15
