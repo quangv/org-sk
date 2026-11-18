@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Notes Viewer</title>
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- CDN dependencies — load async after DOM is ready -->
+  <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vanillatree/dist/vanillatree.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gray-matter@4/index.js"></script>
+
+  <script type="module" src="js/app.js" defer></script>
+  <script type="module" src="js/auth.js" defer></script>
+  <script type="module" src="js/api.js" defer></script>
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="brand">
+      <h1>Notes Viewer</h1>
+    </div>
+    <div class="repo-input-area">
+      <label for="repo-input" class="sr-only">GitHub repository</label>
+      <input id="repo-input" type="text" placeholder="owner/repo or full URL" autocomplete="off">
+      <button id="repo-submit" type="button">Go</button>
+    </div>
+    <div id="auth-status" class="auth-status" aria-live="polite"></div>
+  </header>
+
+  <main id="app-shell" class="app-shell" hidden>
+    <aside id="tree-pane" class="tree-pane" role="region" aria-label="Repository tree">
+      <div id="tree-container" class="tree-container"></div>
+      <div id="tree-empty" class="empty-state" hidden>No notes found in this repo.</div>
+      <div id="tree-loading" class="spinner" hidden aria-label="Loading repository tree..."></div>
+    </aside>
+    <section id="reader-pane" class="reader-pane" role="region" aria-label="Note content">
+      <header id="reading-header" class="reading-header" hidden>
+        <h2 id="note-title"></h2>
+        <time id="note-last-modified" datetime=""></time>
+      </header>
+      <article id="note-content" class="note-content" aria-live="polite"></article>
+      <div id="reader-empty" class="empty-state" hidden>Click a note in the tree to read it.</div>
+      <div id="reader-loading" class="spinner" hidden aria-label="Loading note..."></div>
+      <div id="reader-error" class="error-state" hidden>
+        <p id="error-message"></p>
+        <button id="retry-button" type="button">Retry</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

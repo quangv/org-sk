@@ -1,0 +1,11 @@
+{
+  "name": "github-notes-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browse markdown notes from any GitHub repo via a two-pane reader with an accessible tree view.",
+  "scripts": {
+    "dev": "npx wrangler pages dev --port 8788 apps/github-notes-viewer",
+    "deploy": "npx wrangler deploy"
+  },
+  "devDependencies": {}
+}

@@ -14,11 +14,11 @@
 
 **Purpose**: Project scaffolding under `apps/github-notes-viewer/`.
 
-- [ ] T001 Create directory structure per plan.md project layout: `apps/github-notes-viewer/{css/,js/components/,assets/}`, `workers/`, root config files
-- [ ] T002 [P] Initialize `apps/github-notes-viewer/package.json` with empty `devDependencies` (wrangler CLI optional; keep it minimal per Principle I)
-- [ ] T003 [P] Create `index.html` shell with semantic two-pane `<main>` layout: `<aside id="tree-pane">` (left) and `<section id="reader-pane">` (right), plus a `<header>` for repo input and auth status
-- [ ] T004 [P] Add CDN script tags in `<head>` for `marked`, `DOMPurify`, `Prism` (core + common languages), `vanillatree` (ARIA tree widget), and `gray-matter`; defer execution until DOM ready
-- [ ] T005 [P] Create `css/main.css` with CSS custom properties for theming (WCAG AA contrast minimums per Principle VIII), two-pane flexbox layout, responsive breakpoints for mobile (< 768px collapses to single pane with tree toggle)
+- [X] T001 Create directory structure per plan.md project layout: `apps/github-notes-viewer/{css/,js/components/,assets/}`, `workers/`, root config files
+- [X] T002 [P] Initialize `apps/github-notes-viewer/package.json` with empty `devDependencies` (wrangler CLI optional; keep it minimal per Principle I)
+- [X] T003 [P] Create `index.html` shell with semantic two-pane `<main>` layout: `<aside id="tree-pane">` (left) and `<section id="reader-pane">` (right), plus a `<header>` for repo input and auth status
+- [X] T004 [P] Add CDN script tags in `<head>` for `marked`, `DOMPurify`, `Prism` (core + common languages), `vanillatree` (ARIA tree widget), and `gray-matter`; defer execution until DOM ready
+- [X] T005 [P] Create `css/main.css` with CSS custom properties for theming (WCAG AA contrast minimums per Principle VIII), two-pane flexbox layout, responsive breakpoints for mobile (< 768px collapses to single pane with tree toggle)
 
 **Checkpoint**: Static page loads with layout structure but no interactivity yet.
 
