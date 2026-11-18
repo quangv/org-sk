@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GitHub Notes Viewer — Internal Tree Contract",
+  "description": "The shape the app constructs from GitHub's recursive Git Trees API response before handing it to the tree widget. Maps one-to-one onto the TreeNode entity documented in data-model.md.",
+  "example_source": "GET /repos/{owner}/{repo}/git/trees/{sha}?recursive=1",
+  "raw_github_response": {
+    "truncated": "boolean — true when the repo has >100k entries; should not happen for personal notes repos under the scope constraint",
+    "sha": "string — commit SHA of the base ref (default_branch)",
+    "tree": [
+      {
+        "path": "string — forward-slash relative path from repo root",
+        "type": "\"blob\" | \"tree\"",
+        "sha": "string — object SHA",
+        "size": "number — bytes, present only for blobs"
+      }
+    ]
+  },
+  "app_internal_representation": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "required": ["id", "label", "path", "type", "sha", "size"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable identifier derived from path: slashes replaced with hyphens, root becomes 'root'. Used as ARIA node ID."
+        },
+        "label": {
+          "type": "string",
+          "description": "Basename portion of path. Displayed verbatim including dotfiles."
+        },
+        "path": {
+          "type": "string",
+          "description": "Full forward-slash path. Identity key into the Note map for blob nodes."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["tree", "blob"],
+          "description": "Mirrors the GitHub type field. Directories are expandable; blobs are leaf notes (when .md)."
+        },
+        "sha": {
+          "type": "string",
+          "description": "SHA used for staleness detection. Not displayed to the user."
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Size in bytes. Omitted or zero for tree nodes."
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#" },
+          "description": "Nested child nodes for directory-type entries. Undefined on leaf blobs."
+        },
+        "isFolder": {
+          "type": "boolean",
+          "description": "Derived convenience: true iff type === 'tree'."
+        }
+      }
+    }
+  },
+  "construction_rules": {
+    "sorting": "entries sorted lexicographically by path so sibling order mirrors GitHub",
+    "pruning": "intermediate directories containing no .md descendants are omitted from the final tree",
+    "leaf_filter": "only paths ending with '.md' become leaf nodes; other blobs are invisible to the tree",
+    "empty_repo_behavior": "empty tree array renders an empty-state message per Edge Cases rather than an error"
+  },
+  "rate_limit_considerations": {
+    "endpoint": "/repos/{owner}/{repo}/git/trees/{sha}?recursive=1",
+    "cost_points": "~3 points under authenticated rate limit",
+    "cacheability": "response includes cache-control: public, max-age=60; browser/CDN cache is leveraged without custom logic",
+    "re-fetch_trigger": "repo change or explicit refresh action"
+  }
+}

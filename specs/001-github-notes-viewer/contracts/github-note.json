@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GitHub Notes Viewer — Note Content Contract",
+  "description": "The shape of a single note after fetching via the Contents API and splitting front matter. Feeds both the Note entity (data-model.md) and the rendered output pipeline.",
+  "example_source": "GET /repos/{owner}/{repo}/contents/{path}",
+  "raw_github_response": {
+    "name": "string — filename including extension",
+    "path": "string — full forward-slash path",
+    "sha": "string — blob SHA",
+    "size": "integer — content size in bytes",
+    "url": "string — API URL for this file",
+    "html_url": "string — direct GitHub UI URL (not used by the app)",
+    "git_url": "string — git blob URL (not used by the app)",
+    "download_url": "string — direct raw download URL; unused because we decode base64 client-side",
+    "type": "string — always 'file' for contents endpoint",
+    "content": "string — base64-encoded markdown text",
+    "encoding": "string — always 'base64'",
+    "self": "string — same as url",
+    "lastModified": "string — RFC 3339 timestamp of HEAD commit for this path",
+    "lastCommitSha": "string — SHA of that commit"
+  },
+  "app_parsed_note": {
+    "type": "object",
+    "required": ["path", "filename", "title", "content", "sha", "size", "lastModified", "etag"],
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "Identity key. Matches the TreeNode.path for the corresponding leaf."
+      },
+      "filename": {
+        "type": "string",
+        "description": "Basenames extracted from path. Used as title fallback."
+      },
+      "title": {
+        "type": "string",
+        "description": "Final display title. Comes from YAML front matter 'title' key if present; otherwise slugified filename stem."
+      },
+      "content": {
+        "type": "string",
+        "description": "Raw markdown text after base64 decode. Piped through marked → DOMPurify for rendering."
+      },
+      "frontMatter": {
+        "type": ["object", "null"],
+        "description": "Parsed YAML keys from gray-matter. Treated as metadata only — never rendered as part of the note body. Accessible on the entity for future features like date sorting but not consumed in v1."
+      },
+      "sha": {
+        "type": "string",
+        "description": "Blob SHA. Mirrors the tree node sha for consistency checks."
+      },
+      "size": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Content size in bytes."
+      },
+      "lastModified": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Commit date string from the API. Rendered as-is in the reading view header."
+      },
+      "etag": {
+        "type": "string",
+        "description": "ETag response header value, stored verbatim for use as If-None-Match on subsequent fetches within the session."
+      },
+      "fetchedAt": {
+        "type": "string",
+        "format": "date-time",
+        "description": "Local clock time when this note was last fetched. Updated even on 304 responses."
+      }
+    },
+    "title_fallback_logic": "if frontMatter.title exists and is non-empty string, use it; else strip .md suffix from filename and preserve existing capitalization/punctuation"
+  },
+  "conditional_request_flow": {
+    "first_fetch": "GET /repos/{owner}/{repo}/contents/{path} with Authorization: Bearer <cookie>",
+    "subsequent_fetch": "same GET plus If-None-Match: <stored_etag>",
+    "on_200": "replace note.content with new decoded content; update etag, sha, lastModified, fetchedAt",
+    "on_304": "do NOT mutate note.content; update only fetchedAt; return existing Note object unchanged",
+    "on_non_retryable_error": "set ReadingViewState.error per FR-008; show retry button"
+  },
+  "markdown_rendering_pipeline": {
+    "steps": [
+      "gray-matter.split(content) → { content, data }",
+      "marked.parse(content) → html_string",
+      "DOMPurify.sanitize(html_string) → safe_html",
+      "Prism.highlightAll() called post-insert for code block re-highlighting"
+    ],
+    "sanitization_policy": "DOMPurify default sanitize mode with hooks disabled; no user-controlled iframe/srcdoc allowed. Links open in new tab via rel=noreferrer noopener when target is external."
+  },
+  "rate_limit_considerations": {
+    "endpoint": "/repos/{owner}/{repo}/contents/{path}",
+    "authenticated_cost": "~1 point per request",
+    "secondary_limit_caution": "~80 content reads/min burst; ETag caching limits repeated reads to once-per-session per note in practice",
+    "header_watch": "X-RateLimit-Remaining logged to console during development; silently handled at runtime by respecting 304s"
+  }
+}
